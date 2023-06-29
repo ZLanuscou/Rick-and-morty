@@ -1,3 +1,6 @@
 .App {
    text-align: center;
 }
+.darken {
+   background-color: rgba(0, 0, 0, 0.652);
+ }
