@@ -27,7 +27,8 @@ justify-content: center;
   max-width: 300px;
   height: 100%;
   margin: 15px;
-  background-color: white;
+  background-color: #B0AEAD;
+  opacity: 0.8;
   background-size: contain;
   background-repeat: repeat;
   border-radius: 10px;
@@ -36,32 +37,56 @@ justify-content: center;
  }
 `;
 const CardImage = styled.img`
+opacity: 0,9;
   width: 100%;
   height: auto;
   display: block;
   margin: 0 auto;
-  border-radius: 10px;
+  
 `;
 const ImgDiv = styled.div`
+opacity: 0,9;
+justify-content: center;
+  text-align: center;
 `;
 const CardH =styled.h2`
+font-family: "Arial", sans-serif;
 margin: 0;
 font-size: 20px;
 line-height: 1.2;
 `; 
 const NameSt = styled.div`
-
+justify-content: center;
+  text-align: center;
 `;
 const Boton = styled.button`
-background-color: pink;
+font-size: 19px;
+font-family: "Arial", sans-serif;
+
+background-color:#3B3737;
 color: black;
-position: absolute;
 top: 0;
 right: 0;
 border: none;
-width 1.5vw;
-height: 3vh;
+width 100%;
+height: 4vh;
 cursor: pointer;
+border-radius: 5px;
+-webkit-transition-duration: 0.4s; /* Safari */
+transition-duration: 0.4s;
+&:hover{background-color: #A63119; /* Green */
+color: white;} 
+
+`;
+const StLink = styled(Link)`
+
+color: black;
+transition-duration: 0.4s;
+&:hover {
+  background-color: ##909090 ;
+  color: #909090 ;
+}
+text-decoration: none;
 `;
 export default function Card(props) {
    const close = ()=>{
@@ -69,19 +94,22 @@ export default function Card(props) {
    };
    return (
       <PageBackground>
+      
          <CardContainer> 
             <ImgDiv> 
-          <Boton onClick={close}>X</Boton>
+          <Boton onClick={close}>Remover</Boton>
           <CardImage src={props.image} alt='' />
           </ImgDiv>
-          <Link to={`/detail/${props.id}` } >
-         <CardH >{props.name}</CardH>
-         </Link>
+          
+         <NameSt> 
+            <StLink to={`/detail/${props.id}` } >
+         <Boton >{props.name}</Boton>
+         </StLink>
          <CardH>{props.status}</CardH>
          <CardH>{props.species}</CardH>
          <CardH>{props.gender}</CardH>
          <CardH>{props.origin}</CardH>
-          
+         </NameSt>
          </CardContainer>
       </PageBackground>
    );

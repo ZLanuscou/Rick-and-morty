@@ -8,30 +8,38 @@ transition-duration: 0.4s;
 &:hover{background-color: #4CAF50; /* Green */
 color: white;} 
 margin: 1px;
-top: 20px;
-right: 20px;
-text-decoration: none;
 `;
 const SearchBarContainer = styled.div`
 display: flex;
 align-items: center;
-justify-content: flex-start;
-margin: 20px;
-background-color: white; 
+justify-content: center;
+margin: 0px;
+background-color: black; 
 background-size: cover;
 background-repeat: no-repeat;
-  border: 2px solid #ccc;
+  
   border-radius: 5px;
   padding: 10px;
-  max-width: 350px;
+  width: 100%;
+`;
+
+const NavLink = styled(Link)`
+  transition-duration: 0.4s;
+  &:hover {
+    background-color: #4caf50;
+    color: white;
+  }
+  margin: 1px;
+  text-decoration: none;
 `;
 export default function Nav(props) {
    return (
    
       <SearchBarContainer>
-         <Btn><Link to="/about" >About</Link></Btn>
-         <Btn>  <Link to="/home">Home</Link></Btn>
+         <NavLink to="/about" >About</NavLink>
+           <NavLink to="/home">Home</NavLink>
           <SearchBar onSearch={props.onSearch}/>
+          <NavLink to="/Form">Login</NavLink>
       </SearchBarContainer>
    );
 }

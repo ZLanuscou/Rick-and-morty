@@ -6,7 +6,6 @@ border-radius: 10px;
 `;
 const ContainCard = styled.div`
 display: flex;
-
 `;
 const CornerImage = styled.img`
   position: absolute;

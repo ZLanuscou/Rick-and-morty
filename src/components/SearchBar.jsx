@@ -4,7 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 const Stdiv = styled.div`
 display: flex;
-justify-content: flex-end;
+justify-content: center;
 `;
 const StyledButton = styled.button`
 -webkit-transition-duration: 0.4s; /* Safari */
@@ -12,8 +12,6 @@ transition-duration: 0.4s;
 &:hover{background-color: #4CAF50; /* Green */
 color: white;} 
 margin: 2px;
-top: 20px;
-right: 20px;
 `;
 const Inp = styled.input`
 margin: 7px;

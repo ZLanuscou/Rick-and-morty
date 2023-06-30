@@ -19,7 +19,17 @@ useEffect(() => {
     return setCharacter({});
  }, [id]);
  const StBod = styled.div`
-background-color: white;
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+`;
+const ImgDiv = styled.div`
+display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 `;
  return (
     
@@ -27,6 +37,9 @@ background-color: white;
       <h1>¡Bienvenido! Este es el personaje:</h1>
       {character.name ? (
         <StBod>
+            <ImgDiv>
+        <img src={character.image} alt="" />
+      </ImgDiv>
           <h2>{character.name}</h2>
           <h2>{character.status}</h2>
           <h2>{character.species}</h2>
@@ -36,9 +49,7 @@ background-color: white;
       ) : (
         <h2>Cargando...</h2>
       )}
-      <div>
-        <img src={character.image} alt="" />
-      </div>
+      
     </div>
     
   );
