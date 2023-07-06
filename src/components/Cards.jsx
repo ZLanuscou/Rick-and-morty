@@ -1,11 +1,16 @@
 import Card from './Card';
 import styled from 'styled-components';
 import imagen from './assets/imagen.png';
-const StyledDiv = styled.div`
-border-radius: 10px;
-`;
+
+
 const ContainCard = styled.div`
+
 display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+height: 100%;
+width: 100%;
 `;
 const CornerImage = styled.img`
   position: absolute;
@@ -18,7 +23,7 @@ const CornerImage = styled.img`
 export default function Cards(props) {
   
    return (
-     <StyledDiv>
+     <div>
        <ContainCard>
          <CornerImage src={imagen} alt="Imagen de esquina" />
          {props.characters.map((charact) => (
@@ -36,6 +41,6 @@ export default function Cards(props) {
            />
          ))}
        </ContainCard>
-     </StyledDiv>
+     </div>
    );
  }

@@ -36,6 +36,7 @@ export default function Nav(props) {
    return (
    
       <SearchBarContainer>
+        <NavLink to="/favorites" >Favorites</NavLink>
          <NavLink to="/about" >About</NavLink>
            <NavLink to="/home">Home</NavLink>
           <SearchBar onSearch={props.onSearch}/>

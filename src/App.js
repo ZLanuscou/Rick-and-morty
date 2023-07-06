@@ -1,5 +1,7 @@
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 import { useLocation, Navigate } from 'react-router-dom';
+import Favorites from './components/Favorites';
 import Form from './components/Form';
 import Detail from './components/Detail';
 import About from './components/about';
@@ -7,20 +9,36 @@ import Cards from './components/Cards.jsx';
 import Nav from './components/Nav.jsx';
 import styled from 'styled-components';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-const StDiv = styled.div`
-background-image: url(https://uvn-brightspot.s3.amazonaws.com/assets/vixes/btg/curiosidades.batanga.com/files/5-cosas-sobre-el-espacio-y-la-materia-que-debemos-tener-claras.jpg);
+const BackgroundDiv = styled.div `
+background-image: url();
 background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100vw;
-  height: 100vh;
-`; 
+background-repeat: no-repeat;
+background-position: center;
+height: 100%;
+width: 100%;
+`;
+
+
 function App() {
    const location = useLocation();
-   const [isLogged, setisLogged] = useState(false)
    const[characters, setCharacters] = useState([])
+   const navigate = useNavigate();
+   const [access, setAccess] = useState(false);
+   const EMAIL = 'zubairalilanuscou@gmail.com';
+   const PASSWORD = 'qwerty123';
+
+   function login(userData) {
+      if (userData.password === PASSWORD && userData.email === EMAIL) {
+         setAccess(true);
+         navigate('/home');
+      }
+   }
+   useEffect(() => {
+      !access && navigate('/');
+   }, [access]);
+
    function onClose(id) {
       const parsedId = parseInt(id)
       const updatedCharacters = characters.filter((character) => character.id !== parsedId);
@@ -36,31 +54,21 @@ function App() {
       });
    }
    return (
-      <> 
-      { isLogged ?(
-      <StDiv>
-         
+      
  <div className='App'>
-         <Nav onSearch={onSearch}/>
-      </div>
+   {location.pathname !== "/" && <Nav onSearch={onSearch}/>}
+         
+      
+      
          <Routes>      
-     <Route path="/home" element={<Cards characters={characters} onClose={onClose} />} /> 
-     <Route path="/about" element={<About />} /> 
-     <Route path="/detail/:id" element={<Detail />} />          
-    
+         <Route path="/favorites" element={<BackgroundDiv> <Favorites /> </BackgroundDiv>} />       
+     <Route path="/home" element={ <BackgroundDiv> <Cards characters={characters} onClose={onClose} /></BackgroundDiv>} /> 
+     <Route path="/about" element={<BackgroundDiv> <About /></BackgroundDiv>} /> 
+     <Route path="/detail/:id" element={<BackgroundDiv> <Detail /></BackgroundDiv>} />          
+     <Route path="/" element={<BackgroundDiv> <Form login={login}/></BackgroundDiv>}/> 
   </Routes>
-     
-      </StDiv>
-       ) : (  
-         <Routes>
-       <Route path="/Form" element={<Form setisLogged={setisLogged}/>}/> 
-       <Route
-           path='/*'
-          element={<Navigate to='/Form' replace />}
-              />
-       </Routes>
-      )}
-</>
+  </div>
+  
 );
        }
 export default App;

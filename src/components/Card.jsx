@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { keyframes } from 'styled-components';
 import { Link } from "react-router-dom";
 import imagen from './assets/imagen.png';
+import { addFav, removeFav } from "../redux/actions";
+import { connect } from "react-redux";
+ 
 const scaleAnimation = keyframes`
   from {
     transform: scale(1);
@@ -11,13 +14,7 @@ const scaleAnimation = keyframes`
     transform: scale(1.1);
   }
 `;
-const PageBackground = styled.div`
-  background-image: url({imagen});
-  background-size: auto;
-  background-repeat: repeat;
-  background-position: center center;
-  border-radius: 10px;
-`;
+
 const CardContainer = styled.div`
 display: inline-block;
 flex-direction: column;
@@ -31,7 +28,7 @@ justify-content: center;
   opacity: 0.8;
   background-size: contain;
   background-repeat: repeat;
-  border-radius: 10px;
+  border-radius: 20px;
   &:hover {
    animation: ${scaleAnimation} 0.3s ease-in-out forwards;
  }
@@ -88,15 +85,40 @@ transition-duration: 0.4s;
 }
 text-decoration: none;
 `;
-export default function Card(props) {
+ function Card(props) {
+  const{myFavorites} = props
+  const {addFav, removeFav} = props
+  const [isFav, setisFav] = useState(false)
    const close = ()=>{
     props.onClose(props.id)
    };
+   const handleFavorite = ()=> {
+    if(isFav === true){
+     setisFav(false)
+     removeFav(props.id)
+    }else if(isFav === false){
+     setisFav(true)
+     addFav(props)
+    }
+   }
+   useEffect(() => {
+    myFavorites.forEach((fav) => {
+       if (fav.id === props.id) {
+          setisFav(true);
+       }
+    });
+ }, [myFavorites]);
    return (
-      <PageBackground>
-      
+      <div>
          <CardContainer> 
             <ImgDiv> 
+            {
+   isFav ? (
+      <button onClick={handleFavorite}>❤️</button>
+   ) : (
+      <button onClick={handleFavorite}>🤍</button>
+   )
+}
           <Boton onClick={close}>Remover</Boton>
           <CardImage src={props.image} alt='' />
           </ImgDiv>
@@ -111,6 +133,19 @@ export default function Card(props) {
          <CardH>{props.origin}</CardH>
          </NameSt>
          </CardContainer>
-      </PageBackground>
+      </div>
    );
 }
+const mapStateToProps = (state)=>{
+ return {
+  myFavorites: state.myFavorites
+ }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+  return{
+   addFav: (payload)=>{dispatch(addFav(payload))},
+   removeFav: (payload)=>{dispatch(removeFav(payload))}
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps )(Card)

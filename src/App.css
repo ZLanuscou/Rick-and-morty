@@ -4,3 +4,11 @@
 .darken {
    background-color: rgba(0, 0, 0, 0.652);
  }
+ body {
+   background-color: rgba(12, 11, 11, 0.652);
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+   height: 100%;
+   width: 100%;
+ }
