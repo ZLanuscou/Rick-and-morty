@@ -1,26 +1,28 @@
-const axios = require('axios');
-function getCharById(res, id) {
-  axios(`https://rickandmortyapi.com/api/character/${id}`)  
-  .then(({data})=>{
-    if(data.name){ 
-   const pj = {
-    id: id,
-    name: data.name,
-    gender: data.gender,
-    species: data.species,
-    origin: {
-        name: data.origin.name,
-        url: data.origin.url
-    },
-    image: data.image,
-    status: data.status
-   }
-   res.writeHead(200, {"Content-Type":"application/json"})
-   res.end(JSON.stringify(pj))
-}
-  }).catch((error)=>{
-    res.writeHead(500, {"Content-Type":"text/plain"})
-    res.end({message:error})
-  })
+const URL = "https://rickandmortyapi.com/api/character/"
+const express = require("express")
+const axios = require("axios")
+function getCharById(req, res) {
+  const id = req.params.id;
+  axios(URL + id)
+    .then((response) => {
+      if (response.ok) {
+        const obj = {
+          id: response.data.id,
+          status: response.data.status,
+          name: response.data.name,
+          species: response.data.species,
+          origin: response.data.origin,
+          image: response.data.image,
+          gender: response.data.gender
+        };
+        res.json(obj);
+      } else {
+        res.status(404).json({ error: "Not fount" });
+      }
+    })
+    .catch((error) => {
+      console.error("Error en la petición:", error);
+      res.status(500).json({ error: error.message });
+    });
 }
 module.exports = getCharById
