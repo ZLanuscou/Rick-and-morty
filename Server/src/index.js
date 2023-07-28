@@ -1,7 +1,9 @@
 const express = require('express');
 const server = require("./app");
 const PORT = 3000;
-
-server.listen(PORT, () => {
-   console.log('Server raised in port: ' + PORT);
-});
+const { conn } = require('./DB_connection');
+conn.sync({force:true}).then(()=>{
+   server.listen(PORT, () => {
+      console.log('Server raised in port: ' + PORT);
+   });
+})
